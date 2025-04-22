@@ -1,0 +1,21 @@
+# 제목은 최대 50글자까지 아래에 작성 ex) ⛏ fix : 로그인 API auth 수정
+
+# --- COMMIT TYPE ---  
+#   <타입> 리스트 
+# ✨ feat : 새로운 기능 추가
+# ⛏ fix : 버그 수정
+# 💡 refactor : 코드 리팩토링
+# 🎨 style : 코드 스타일 및 포맷 변경
+# 📝 docs : 문서 추가 및 수정
+# 🧪 test : 테스트 코드 추가 및 수정
+# 💫 chore : 그 외 기타사항
+
+# -------COMMIT LOGIC-----------  
+# 1. (be-develop) $ git fetch
+# 2. (be-develop) $ git checkout -b be-feature/branch --track origin/be-develop
+# 3. Do commit!
+# 4. (be-feature/branch) $ git pull --rebase origin be-develop
+#     conflict를 해결한다.
+#     4-1. (be-feature/branch) $ git add /filename
+#     4-2. (be-feature/branch) $ git rebase --continue
+# 5. (be-feature/branch) $ git push origin be-feature/branch

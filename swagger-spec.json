@@ -1,0 +1,839 @@
+{
+  "openapi": "3.0.0",
+  "paths": {
+    "/auth/login": {
+      "post": {
+        "operationId": "AuthController_login",
+        "summary": "로그인 API",
+        "description": "**로그인 요청처리**",
+        "parameters": [],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/LogInRequestDto"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "로그인 성공 시 응답객체에 accessToken 담은 cookie와 응답메시지를 설정하고 반환",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ResponseDto"
+                }
+              }
+            }
+          }
+        },
+        "tags": [
+          "LoginService"
+        ]
+      }
+    },
+    "/auth/signup": {
+      "post": {
+        "operationId": "AuthController_signUp",
+        "summary": "회원가입 API",
+        "description": "**회원가입 요청처리**",
+        "parameters": [],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/SignUpRequestDto"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "회원가입 성공 시 응답 객체에 쿠키와 결과 메시지를 설정하고 반환",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ResponseDto"
+                }
+              }
+            }
+          }
+        },
+        "tags": [
+          "LoginService"
+        ]
+      }
+    },
+    "/auth/change-password": {
+      "post": {
+        "operationId": "AuthController_changePassword",
+        "summary": "비밀번호 변경 API",
+        "description": "**비밀번호 변경 요청처리**",
+        "parameters": [],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/passwordChangeRequestDto"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "비밀번호 변경 성공 여부 반환",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ResponseDto"
+                }
+              }
+            }
+          }
+        },
+        "tags": [
+          "LoginService"
+        ]
+      }
+    },
+    "/auth/logout": {
+      "get": {
+        "operationId": "AuthController_logOut",
+        "summary": "로그아웃 API",
+        "description": " **로그아웃 요청처리**",
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": "로그아웃 성공 시 응답 객체에 빈 AccessToken 쿠키를 설정하고 반환"
+          }
+        },
+        "tags": [
+          "LoginService"
+        ]
+      }
+    },
+    "/stage/{round}": {
+      "get": {
+        "operationId": "StageController_getStages",
+        "summary": "모든 단계 조회",
+        "description": "**해당 차수에 대한 하위 모든 단계를 반환**",
+        "parameters": [
+          {
+            "name": "round",
+            "required": true,
+            "in": "path",
+            "description": "차수",
+            "schema": {
+              "type": "number"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "모든 단계 조회 성공 시, 응답 메시지를 설정하고 반환",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ResponseDto"
+                }
+              }
+            }
+          }
+        },
+        "tags": [
+          "Stage"
+        ]
+      },
+      "post": {
+        "operationId": "StageController_addStage",
+        "summary": "단계 추가",
+        "description": "**새 단계를 추가하고 해당 차수에 대한 하위 모든 단계를 반환**",
+        "parameters": [
+          {
+            "name": "round",
+            "required": true,
+            "in": "path",
+            "description": "차수",
+            "schema": {
+              "type": "number"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "새 단계 추가 및 모든 단계 조회 성공 시, 응답 메시지를 설정하고 반환",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ResponseDto"
+                }
+              }
+            }
+          }
+        },
+        "tags": [
+          "Stage"
+        ]
+      },
+      "delete": {
+        "operationId": "StageController_deleteStage",
+        "summary": "단계 삭제",
+        "description": "**단계ID에 해당하는 단계를 삭제하고 해당 차수에 대한 하위 모든 단계를 반환**",
+        "parameters": [
+          {
+            "name": "round",
+            "required": true,
+            "in": "path",
+            "description": "차수",
+            "schema": {
+              "type": "number"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/DeleteStagesDto"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "해당 단계 삭제 및 남은 단계 조회 성공 시, 응답 메시지를 설정하고 반환",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ResponseDto"
+                }
+              }
+            }
+          }
+        },
+        "tags": [
+          "Stage"
+        ]
+      }
+    },
+    "/dashboard/progress-status": {
+      "post": {
+        "operationId": "DashboardController_PostTotalProgressStatus",
+        "summary": "전체 진행 업데이트 API",
+        "description": "**해당 차수의 데이터가 이미 있으면 Update, 없으면 Insert**",
+        "parameters": [],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/DashboardOverallStatusDto"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "전체 진행 상태 입력 성공 시 응답메시지를 설정하고 반환",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ResponseDto"
+                }
+              }
+            }
+          }
+        },
+        "tags": [
+          "Dashboard"
+        ]
+      }
+    },
+    "/dashboard/date-time-info": {
+      "post": {
+        "operationId": "DashboardController_PostDateTimeInfo",
+        "summary": "날짜시간 정보 업데이트 API",
+        "description": "**해당 차수의 데이터가 이미 있으면 Update, 없으면 Insert**",
+        "parameters": [],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/DashboardDateDto"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "실제 시작일시, 예상 종료일시 입력 성공 시 응답메시지를 설정하고 반환",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ResponseDto"
+                }
+              }
+            }
+          }
+        },
+        "tags": [
+          "Dashboard"
+        ]
+      }
+    },
+    "/dashboard/project-info": {
+      "post": {
+        "operationId": "DashboardController_PostProjectInfo",
+        "summary": "프로젝트 정보 업데이트 API",
+        "description": "**해당 차수의 데이터가 이미 있으면 Update, 없으면 Insert**",
+        "parameters": [
+          {
+            "name": "round",
+            "required": true,
+            "in": "query",
+            "description": "차수",
+            "schema": {
+              "example": 1,
+              "type": "number"
+            }
+          },
+          {
+            "name": "taskQuantity",
+            "required": true,
+            "in": "query",
+            "description": "업무수량",
+            "schema": {
+              "example": 230,
+              "type": "number"
+            }
+          },
+          {
+            "name": "equipmentQuantity",
+            "required": true,
+            "in": "query",
+            "description": "장비수량",
+            "schema": {
+              "example": 397,
+              "type": "number"
+            }
+          },
+          {
+            "name": "vehicleQuantity",
+            "required": true,
+            "in": "query",
+            "description": "차량수량",
+            "schema": {
+              "example": 7,
+              "type": "number"
+            }
+          },
+          {
+            "name": "transportRoute",
+            "required": true,
+            "in": "query",
+            "description": "운송경로",
+            "schema": {
+              "example": "주경로",
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "조회 성공 시 응답메시지를 설정하고 반환",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ResponseDto"
+                }
+              }
+            }
+          }
+        },
+        "tags": [
+          "Dashboard"
+        ]
+      }
+    },
+    "/dashboard/all": {
+      "get": {
+        "operationId": "DashboardController_GetDashboardInfo",
+        "summary": "대쉬보드 정보 조회 API",
+        "description": "**대쉬보드 정보 조회**",
+        "parameters": [
+          {
+            "name": "round",
+            "required": true,
+            "in": "query",
+            "description": "차수",
+            "schema": {
+              "example": 1,
+              "type": "number"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "대쉬보드 정보 조회 성공 시 응답메시지를 설정하고 반환",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ResponseDto"
+                }
+              }
+            }
+          }
+        },
+        "tags": [
+          "Dashboard"
+        ]
+      }
+    },
+    "/issue/all": {
+      "post": {
+        "operationId": "IssueController_PostIssueInfo",
+        "summary": "이슈사항 업데이트 API",
+        "description": "**해당 차수의 데이터가 이미 있으면 Update, 없으면 Insert**",
+        "parameters": [],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/IssueDto"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "이슈사항 입력 성공 시 응답메시지를 설정하고 반환",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ResponseDto"
+                }
+              }
+            }
+          }
+        },
+        "tags": [
+          "Issue"
+        ]
+      },
+      "get": {
+        "operationId": "IssueController_GetIssueInfo",
+        "summary": "이슈사항 정보 조회 API",
+        "description": "**이슈사항 정보 조회**",
+        "parameters": [
+          {
+            "name": "round",
+            "required": true,
+            "in": "query",
+            "description": "차수",
+            "schema": {
+              "example": 1,
+              "type": "number"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "이슈사항 정보 조회 성공 시 응답메시지를 설정하고 반환",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ResponseDto"
+                }
+              }
+            }
+          }
+        },
+        "tags": [
+          "Issue"
+        ]
+      }
+    },
+    "/notice/all": {
+      "post": {
+        "operationId": "NoticeController_PostIssueInfo",
+        "summary": "공지사항 업데이트 API",
+        "description": "**해당 차수의 데이터가 이미 있으면 Update, 없으면 Insert**",
+        "parameters": [],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/NoticeDto"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "공지사항 입력 성공 시 응답메시지를 설정하고 반환",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ResponseDto"
+                }
+              }
+            }
+          }
+        },
+        "tags": [
+          "Notice"
+        ]
+      },
+      "get": {
+        "operationId": "NoticeController_GetIssueInfo",
+        "summary": "공지사항 정보 조회 API",
+        "description": "**공지사항 정보 조회**",
+        "parameters": [
+          {
+            "name": "round",
+            "required": true,
+            "in": "query",
+            "description": "차수",
+            "schema": {
+              "example": 1,
+              "type": "number"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "공지사항 정보 조회 성공 시 응답메시지를 설정하고 반환",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ResponseDto"
+                }
+              }
+            }
+          }
+        },
+        "tags": [
+          "Notice"
+        ]
+      }
+    },
+    "/task/{stageId}": {
+      "get": {
+        "operationId": "TaskController_getTasksByStageId",
+        "summary": "모든 작업 조회",
+        "description": "**해당 단계ID에 대한 하위 모든 작업을 반환**",
+        "parameters": [
+          {
+            "name": "stageId",
+            "required": true,
+            "in": "path",
+            "description": "단계ID",
+            "schema": {
+              "type": "number"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "모든 작업 조회 성공 시, 응답 메시지를 설정하고 반환",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ResponseDto"
+                }
+              }
+            }
+          }
+        },
+        "tags": [
+          "Task"
+        ]
+      },
+      "post": {
+        "operationId": "TaskController_updateTasks",
+        "summary": "작업 수정",
+        "description": "**해당 단계ID에 대한 모든 하위 작업을 수정**",
+        "parameters": [
+          {
+            "name": "stageId",
+            "required": true,
+            "in": "path",
+            "schema": {
+              "type": "number"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/UpdateTasksDto"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "작업 수정 성공 시, 응답 메시지를 설정하고 반환",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ResponseDto"
+                }
+              }
+            }
+          }
+        },
+        "tags": [
+          "Task"
+        ]
+      }
+    }
+  },
+  "info": {
+    "title": "IBK 대쉬보드 API 리스트",
+    "description": "엘로드 솔루션",
+    "version": "1.0",
+    "contact": {}
+  },
+  "tags": [],
+  "servers": [],
+  "components": {
+    "schemas": {
+      "LogInRequestDto": {
+        "type": "object",
+        "properties": {
+          "userId": {
+            "type": "string",
+            "description": "아이디",
+            "example": "swagger12"
+          },
+          "password": {
+            "type": "string",
+            "description": "비밀번호",
+            "example": "qwer1111"
+          }
+        },
+        "required": [
+          "userId",
+          "password"
+        ]
+      },
+      "ResponseDto": {
+        "type": "object",
+        "properties": {
+          "message": {
+            "type": "string",
+            "description": "응답 메시지|API 요청에 대한 응답 메시지",
+            "example": "완료되었습니다."
+          },
+          "isSuccess": {
+            "type": "boolean",
+            "description": "성공여부",
+            "example": true
+          },
+          "dataObject": {
+            "type": "object",
+            "description": "리턴 데이터",
+            "example": {
+              "test1": "test",
+              "test2": "test"
+            }
+          },
+          "dataArray": {
+            "description": "리턴 데이터",
+            "example": [
+              {
+                "test1": "test",
+                "test2": "test"
+              }
+            ],
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          }
+        },
+        "required": [
+          "message",
+          "isSuccess",
+          "dataObject",
+          "dataArray"
+        ]
+      },
+      "SignUpRequestDto": {
+        "type": "object",
+        "properties": {
+          "userId": {
+            "type": "string",
+            "description": "아이디",
+            "example": "swagger12"
+          },
+          "password": {
+            "type": "string",
+            "description": "비밀번호",
+            "example": "qwer1111"
+          },
+          "userType": {
+            "type": "string",
+            "description": "유저타입 10 || 20",
+            "example": "10"
+          }
+        },
+        "required": [
+          "userId",
+          "password",
+          "userType"
+        ]
+      },
+      "passwordChangeRequestDto": {
+        "type": "object",
+        "properties": {
+          "userId": {
+            "type": "string",
+            "description": "아이디",
+            "example": "swagger12"
+          },
+          "password": {
+            "type": "string",
+            "description": "비밀번호",
+            "example": "qwer1111"
+          },
+          "newPassword": {
+            "type": "string",
+            "description": "비밀번호",
+            "example": "qwer1234"
+          }
+        },
+        "required": [
+          "userId",
+          "password",
+          "newPassword"
+        ]
+      },
+      "DeleteStagesDto": {
+        "type": "object",
+        "properties": {}
+      },
+      "DashboardOverallStatusDto": {
+        "type": "object",
+        "properties": {
+          "round": {
+            "type": "number",
+            "description": "차수",
+            "example": 1
+          },
+          "overallStatus": {
+            "type": "string",
+            "description": "전체 진행 상태",
+            "example": "정상"
+          }
+        },
+        "required": [
+          "round",
+          "overallStatus"
+        ]
+      },
+      "DashboardDateDto": {
+        "type": "object",
+        "properties": {
+          "round": {
+            "type": "number",
+            "description": "차수",
+            "example": 1
+          },
+          "actualStartDateTime": {
+            "type": "string",
+            "description": "실제 시작일시",
+            "example": "2024-10-03 07:00:00"
+          },
+          "estimatedEndDateTime": {
+            "type": "string",
+            "description": "예상 종료일시",
+            "example": "2024-10-08 07:00:00"
+          }
+        },
+        "required": [
+          "round",
+          "actualStartDateTime",
+          "estimatedEndDateTime"
+        ]
+      },
+      "IssueDto": {
+        "type": "object",
+        "properties": {
+          "round": {
+            "type": "number",
+            "description": "차수",
+            "example": 1
+          },
+          "issueNumber": {
+            "type": "number",
+            "description": "이슈사항번호",
+            "example": 1
+          },
+          "issueContent": {
+            "type": "string",
+            "description": "이슈내용",
+            "example": "이슈있습니다"
+          }
+        },
+        "required": [
+          "round",
+          "issueNumber",
+          "issueContent"
+        ]
+      },
+      "NoticeDto": {
+        "type": "object",
+        "properties": {
+          "round": {
+            "type": "number",
+            "description": "차수",
+            "example": 1
+          },
+          "sequence": {
+            "type": "number",
+            "description": "공지사항번호",
+            "example": 1
+          },
+          "noticeContent": {
+            "type": "string",
+            "description": "공지내용",
+            "example": "1"
+          },
+          "lastModifiedAt": {
+            "type": "string",
+            "description": "최종수정일시",
+            "example": "2024-10-03 07:00:00"
+          },
+          "lastModifier": {
+            "type": "string",
+            "description": "최종수정자",
+            "example": "어드민"
+          }
+        },
+        "required": [
+          "round",
+          "sequence",
+          "noticeContent",
+          "lastModifiedAt",
+          "lastModifier"
+        ]
+      },
+      "UpdateTasksDto": {
+        "type": "object",
+        "properties": {}
+      }
+    }
+  }
+}
