@@ -49,8 +49,19 @@ jobs:
             fi
 
             # 새로운 컨테이너 실행
-            docker run -d -e TZ=Asia/Seoul --restart always --name backend -p 8080:8080 -p 8081:8081 ${{ secrets.DOCKER_USERNAME }}/dashboard_backend:latest
-
+            # docker run -d -e TZ=Asia/Seoul --restart always --name backend -p 8080:8080 -p 8081:8081 ${{ secrets.DOCKER_USERNAME }}/dashboard_backend:latest
+            docker run -d \
+              --name backend \
+              --restart always \
+              -e TZ=Asia/Seoul \
+              -e API_KEY_SECRET="${{ secrets.API_KEY_SECRET }}" \
+              -e DB_HOST="${{ secrets.DB_HOST }}" \
+              -e DB_USER="${{ secrets.DB_USER }}" \
+              -e DB_PASS="${{ secrets.DB_PASS }}" \
+              -e DB_DATABASE="${{ secrets.DB_DATABASE }}" \
+              -p 8080:8080 \
+              -p 8081:8081 \
+              ${{ secrets.DOCKER_USERNAME }}/dashboard_backend:latest
             # 사용하지 않는 이미지 제거
             docker image prune -f
 
