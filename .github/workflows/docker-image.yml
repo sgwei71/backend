@@ -41,6 +41,9 @@ jobs:
             # 최신 이미지 미리 가져오기
             docker pull ${{ secrets.DOCKER_USERNAME }}/dashboard_backend:latest
             
+            # 네트워크 준비
+            docker network create app_default || true
+
             # 기존 backend 컨테이너가 실행 중이면 종료하고 제거
             if docker ps -q -f name=backend; then
               docker stop backend
@@ -53,6 +56,7 @@ jobs:
             docker run -d \
               --name backend \
               --restart always \
+              --network app_default
               -e TZ=Asia/Seoul \
               -e API_KEY_SECRET="${{ secrets.API_KEY_SECRET }}" \
               -e DB_HOST="${{ secrets.DB_HOST }}" \
