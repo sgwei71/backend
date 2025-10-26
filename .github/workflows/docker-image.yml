@@ -59,6 +59,8 @@ jobs:
               --network app_default \
               -e TZ=Asia/Seoul \
               -e API_KEY_SECRET="${{ secrets.API_KEY_SECRET }}" \
+              -e SERVER_PORT="${{ secrets.SERVER_PORT }}" \
+              -e DOC_SERVER_PORT="${{ secrets.DOC_SERVER_PORT }}" \
               -e DB_HOST="${{ secrets.DB_HOST }}" \
               -e DB_USER="${{ secrets.DB_USER }}" \
               -e DB_PASS="${{ secrets.DB_PASS }}" \
