@@ -5,11 +5,19 @@ export class DbConfig {
     public _dbConn: mysql.Pool;
 
     private constructor() {
+        /*
         this._dbConn = mysql.createPool({
             host: process.env.DB_HOST,
             user: process.env.DB_USER,
             password: process.env.DB_PASS,
             database: process.env.DB_DATABASE,
+        });
+        */
+            this._dbConn = mysql.createPool({
+            host: "211.188.55.221",
+            user: "admin",
+            password: "imsi00",
+            database: "imsi00",
         });
     }
 
