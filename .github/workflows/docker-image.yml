@@ -56,7 +56,7 @@ jobs:
             docker run -d \
               --name backend \
               --restart always \
-              --network app_default
+              --network app_default \
               -e TZ=Asia/Seoul \
               -e API_KEY_SECRET="${{ secrets.API_KEY_SECRET }}" \
               -e DB_HOST="${{ secrets.DB_HOST }}" \
