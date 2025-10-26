@@ -17,7 +17,7 @@ export class DbConfig {
             host: "211.188.55.221",
             user: "admin",
             password: "imsi00",
-            database: "imsi00",
+            database: "dashboard",
         });
     }
 
