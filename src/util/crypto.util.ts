@@ -37,7 +37,7 @@ export class CryptoUtil {
     }
 
     /**
-     * 단방향 암호화
+     * 단방향 암호화..
      * @param x
      * @param secret
      * @returns
