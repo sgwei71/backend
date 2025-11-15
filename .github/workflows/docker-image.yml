@@ -58,10 +58,17 @@ jobs:
               --restart always \
               --network app_default \
               -e TZ=Asia/Seoul \
-              -e API_KEY_SECRET="${{ secrets.API_KEY_SECRET }}" \
-              -e ACCESS_EXPIRATION_TIME="${{ secrets.ACCESS_EXPIRATION_TIME }}" \
               -e SERVER_PORT="${{ secrets.SERVER_PORT }}" \
               -e DOC_SERVER_PORT="${{ secrets.DOC_SERVER_PORT }}" \
+              -e API_KEY_SECRET="${{ secrets.API_KEY_SECRET }}" \
+              -e ACCESS_EXPIRATION_TIME="${{ secrets.ACCESS_EXPIRATION_TIME }}" \
+              -e API_EXPIRATION_TIME="${{ secrets.API_EXPIRATION_TIME }}" \
+              -e SWAGGER_ADMIN_USER="${{ secrets.SWAGGER_ADMIN_USER }}" \
+              -e SWAGGER_ADMIN_PASSWORD="${{ secrets.SWAGGER_ADMIN_PASSWORD }}" \
+              -e OPENAPI_TRAFFIC_URL="${{ secrets.OPENAPI_TRAFFIC_URL }}" \
+              -e OPENAPI_TRAFFIC_KEY="${{ secrets.OPENAPI_TRAFFIC_KEY }}" \
+              -e OPENAPI_WEATHER_URL="${{ secrets.OPENAPI_WEATHER_URL }}" \
+              -e OPENAPI_WEATHER_KEY="${{ secrets.OPENAPI_WEATHER_KEY }}" \
               -e DB_HOST="${{ secrets.DB_HOST }}" \
               -e DB_USER="${{ secrets.DB_USER }}" \
               -e DB_PASS="${{ secrets.DB_PASS }}" \
