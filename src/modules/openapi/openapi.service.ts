@@ -1,3 +1,4 @@
+import { Logger } from "@nestjs/common";
 import { HttpException, HttpStatus, Injectable } from "@nestjs/common";
 import { InjectRepository } from "@nestjs/typeorm";
 import axios from "axios";
@@ -102,7 +103,7 @@ export class OpenApiService {
             let baseDate = `${date.getFullYear()}${String(date.getMonth() + 1).padStart(2, "0")}${String(date.getDate()).padStart(2, "0")}`;
             let baseTime = `${String(date.getHours()).padStart(2, "0")}30`; // 30은 고정
             // console.log(`초단기예보 조회 시간 : ${baseDate} ${baseTime}`);
-
+            Logger.log("날짜 :[" + baseDate +"], 시간 ["+baseTime+"], 웨더키 "+process.env.OPENAPI_WEATHER_KEY+", url ["+url);
             const params = {
                 ServiceKey: process.env.OPENAPI_WEATHER_KEY,
                 pageNo: 1,
@@ -114,7 +115,7 @@ export class OpenApiService {
                 ny: 122,
                 dataType: "JSON",
             };
-
+            
             let response = await axios.get(url + "getUltraSrtFcst", { params });
             let result = response.data.response.body.items.item
                 .filter((item) => item.fcstTime === `${String(hour).padStart(2, "0")}00`)
