@@ -115,9 +115,8 @@ export class OpenApiService {
                 ny: 122,
                 dataType: "JSON",
             };
-            Logger.log("params :[" + params +"]");            
             let response = await axios.get(url + "getUltraSrtFcst", { params });
-            Logger.log("응답 :[" + response +"]");
+            
             let result = response.data.response.body.items.item
                 .filter((item) => item.fcstTime === `${String(hour).padStart(2, "0")}00`)
                 .map((item: any) => ({
@@ -127,6 +126,7 @@ export class OpenApiService {
 
             // 기온 갱신
             const temperature = result.find((item) => item.category === "T1H")?.value;
+            Logger.log("getUltraSrtFcst ==> ["+temperature+"]");
             if (temperature !== undefined) weather.temperature = temperature;
             // 하늘 상태 갱신
             const rainCode = result.find((item) => item.category === "PTY")?.value;
@@ -162,12 +162,16 @@ export class OpenApiService {
 
             // 강수확률 갱신
             const precipitationProbability = result.find((item) => item.category === "POP")?.value;
+            Logger.log("getVilageFcst ==> ["+precipitationProbability+"]");
+
             if (precipitationProbability !== undefined) weather.precipitationProbability = precipitationProbability;
             // 강수량 범주 갱신
             const precipitationAmount = result.find((item) => item.category === "PCP")?.value;
             if (precipitationAmount !== undefined) weather.precipitationAmount = precipitationAmount;
 
             this.weatherRepository.save(weather);
+            Logger.log("weatherRepository.save"+weather.temperature);
+            
         } catch (error) {
             throw new HttpException(`날씨정보 OpenApi 요청 중 문제 발생`, HttpStatus.BAD_REQUEST);
         }
