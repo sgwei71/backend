@@ -43,6 +43,7 @@ export class OpenApiService {
                         };
 
                         const response = await axios.get(url, { params });
+                        Logger.log("교통정보 URL :[" +url+"]","PARAM ["+params+"]");
                         const { ServiceResult } = await parseStringPromise(response.data);
                         const speed = parseFloat(ServiceResult?.msgBody?.[0]?.itemList?.[0]?.spd?.[0] ?? "0");
 
@@ -103,7 +104,7 @@ export class OpenApiService {
             let baseDate = `${date.getFullYear()}${String(date.getMonth() + 1).padStart(2, "0")}${String(date.getDate()).padStart(2, "0")}`;
             let baseTime = `${String(date.getHours()).padStart(2, "0")}30`; // 30은 고정
             // console.log(`초단기예보 조회 시간 : ${baseDate} ${baseTime}`);
-            Logger.log("날짜 :[" + baseDate +"], 시간 ["+baseTime+"], 웨더키 "+process.env.OPENAPI_WEATHER_KEY+", url ["+url);
+            Logger.log("날짜 :[" + baseDate +"], 시간 ["+baseTime+"], 웨더키 "+process.env.OPENAPI_WEATHER_KEY+", url ["+url+"]");
             const params = {
                 ServiceKey: process.env.OPENAPI_WEATHER_KEY,
                 pageNo: 1,
