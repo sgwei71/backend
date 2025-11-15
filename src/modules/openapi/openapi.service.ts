@@ -126,7 +126,7 @@ export class OpenApiService {
 
             // 기온 갱신
             const temperature = result.find((item) => item.category === "T1H")?.value;
-            Logger.log("getUltraSrtFcst ==> ["+temperature+"]");
+            Logger.log("getUltraSrtFcst ==> 온도 ["+temperature+"]");
             if (temperature !== undefined) weather.temperature = temperature;
             // 하늘 상태 갱신
             const rainCode = result.find((item) => item.category === "PTY")?.value;
@@ -162,7 +162,7 @@ export class OpenApiService {
 
             // 강수확률 갱신
             const precipitationProbability = result.find((item) => item.category === "POP")?.value;
-            Logger.log("getVilageFcst ==> ["+precipitationProbability+"]");
+            Logger.log("getVilageFcst ==> 강수확율 ["+precipitationProbability+"]");
 
             if (precipitationProbability !== undefined) weather.precipitationProbability = precipitationProbability;
             // 강수량 범주 갱신
@@ -170,8 +170,8 @@ export class OpenApiService {
             if (precipitationAmount !== undefined) weather.precipitationAmount = precipitationAmount;
 
             this.weatherRepository.save(weather);
-            Logger.log("weatherRepository.save"+weather.temperature);
-            
+            Logger.log("weatherRepository.save 온도["+weather.temperature+"]");
+
         } catch (error) {
             throw new HttpException(`날씨정보 OpenApi 요청 중 문제 발생`, HttpStatus.BAD_REQUEST);
         }
