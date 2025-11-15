@@ -41,9 +41,8 @@ export class OpenApiService {
                             serviceKey: process.env.OPENAPI_TRAFFIC_KEY,
                             linkId: linkId,
                         };
-
-                        const response = await axios.get(url, { params });
                         Logger.log("교통정보 URL :[" +url+"]","PARAM ["+params+"]");
+                        const response = await axios.get(url, { params });
                         const { ServiceResult } = await parseStringPromise(response.data);
                         const speed = parseFloat(ServiceResult?.msgBody?.[0]?.itemList?.[0]?.spd?.[0] ?? "0");
 
