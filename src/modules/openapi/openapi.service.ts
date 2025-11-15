@@ -115,8 +115,9 @@ export class OpenApiService {
                 ny: 122,
                 dataType: "JSON",
             };
-            
+            Logger.log("params :[" + params +"]");            
             let response = await axios.get(url + "getUltraSrtFcst", { params });
+            Logger.log("응답 :[" + response +"]");
             let result = response.data.response.body.items.item
                 .filter((item) => item.fcstTime === `${String(hour).padStart(2, "0")}00`)
                 .map((item: any) => ({
