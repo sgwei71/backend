@@ -41,7 +41,6 @@ export class OpenApiService {
                             serviceKey: process.env.OPENAPI_TRAFFIC_KEY,
                             linkId: linkId,
                         };
-                        Logger.log("교통정보 URL :[" +url+"]","PARAM ["+params+"]");
                         const response = await axios.get(url, { params });
                         const { ServiceResult } = await parseStringPromise(response.data);
                         const speed = parseFloat(ServiceResult?.msgBody?.[0]?.itemList?.[0]?.spd?.[0] ?? "0");
@@ -72,6 +71,7 @@ export class OpenApiService {
             traffic.trafficReport2 = trafficReport2;
             traffic.trafficReport3 = trafficReport3;
             this.trafficRepository.save(traffic);
+            Logger.log("trafficRepository.save: 수지-금곡 ["+trafficReport1+"]. 도시고속도로 ["+trafficReport2+"], 송파IC-상일IC ["+trafficReport3+"]");
         } catch (error) {
             throw new HttpException(`교통정보 OpenApi 요청 중 문제 발생`, HttpStatus.BAD_REQUEST);
         }
